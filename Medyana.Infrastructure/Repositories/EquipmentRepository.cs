@@ -17,13 +17,19 @@ namespace Medyana.Infrastructure.Repositories
 
     }
 
-    public async Task<bool> Any(int id) {
+    public async Task<bool> Any(int id)
+    {
       return await Context.Set<Equipment>().AnyAsync(e => e.Id == id);
     }
 
-    public IQueryable<Equipment> GetAllLazy()
+    public async Task<IEnumerable<Equipment>> GetAll()
     {
-      return Context.Set<Equipment>().AsNoTracking().AsQueryable<Equipment>();
+      return Context.Set<Equipment>().AsNoTracking();
+    }
+
+    public async Task<IEnumerable<Equipment>> GetAllIncludeAll()
+    {
+      return Context.Set<Equipment>().Include(e=>e.Clinic).AsNoTracking();
     }
   }
 }

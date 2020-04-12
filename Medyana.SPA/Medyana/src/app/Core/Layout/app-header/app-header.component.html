@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row class="flex">
+        <span class="align-self-left">Medyana</span>
+        <div class="flex justify-right full-width">
+            <button mat-button [matMenuTriggerFor]="ClinicMenu">Clinic</button>
+            <mat-menu #ClinicMenu="matMenu" class="align-self-right">
+                <a mat-menu-item routerLink="/clinic">All Clinics</a>
+                <a mat-menu-item routerLink="/clinic/add">Add New</a>
+            </mat-menu>
+
+            <button mat-button [matMenuTriggerFor]="EquipmentMenu">Equipment</button>
+            <mat-menu #EquipmentMenu="matMenu" class="align-self-right">
+                <a mat-menu-item routerLink="/equipment">All Equipments</a>
+            </mat-menu>
+
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+

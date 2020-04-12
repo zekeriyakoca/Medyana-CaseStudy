@@ -27,7 +27,15 @@ namespace Medyana.Web
     {
       services.AddAppServices(Configuration);
 
-      services.AddControllers();
+      services.AddControllers().AddNewtonsoftJson();
+
+      services.AddCors(options =>
+      {
+        options.AddPolicy("myLocal",
+            policy => policy.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader());
+    });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,6 +44,8 @@ namespace Medyana.Web
       {
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseCors("myLocal");
 
       app.UseHttpsRedirection();
 

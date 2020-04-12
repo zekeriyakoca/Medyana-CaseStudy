@@ -1,9 +1,13 @@
-﻿using Medyana.Domain.Interface;
+﻿using Dtos.Common;
+using Dtos.Enums;
+using Medyana.Domain.Entities;
+using Medyana.Domain.Interface;
 using Medyana.Dtos.Clinic;
 using Medyana.Service.Interfaces;
 using Medyana.Service.Mappers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,13 +28,34 @@ namespace Medyana.Service.AppServices
       if (clinicToDelete == null)
         return false;
       clinicRepository.Remove(clinicToDelete);
+      await clinicRepository.SaveChangesAsync();
       return true;
     }
 
-    public async Task<List<ClinicItemDto>> GetAllClinics()
+    public async Task<Paginatedlist<ClinicItemDto>> GetAllClinics(PaginationRequestDto dto)
     {
-      var clinics = await clinicRepository.GetAll();
-      return clinics?.ToClinicItemDtoList();
+      var result = new Paginatedlist<ClinicItemDto>();
+
+      var query = await clinicRepository.GetAll();
+      var totalItem = query.Count();
+      var property = typeof(Clinic).GetProperties().Where(p => p.CanWrite && p.Name.ToLower() == dto.Column?.ToLower()).SingleOrDefault();
+
+      switch (dto.Type)
+      {
+        case PaginationType.Sorting:
+          query = dto.IsAscending ? query.OrderBy(c => property.GetValue(c)) : query.OrderByDescending(c => property.GetValue(c));
+          break;
+        case PaginationType.Searching:
+          query = query.Where(c => c.Name != null && c.Name.ToLower().Contains(dto.SearchText?.ToLower()));
+          break;
+        default:
+          break;
+      }
+      query = query.Skip(dto.Page * dto.PageItemCount).Take(dto.PageItemCount);
+
+      var clinics = query?.ToClinicItemDtoList();
+
+      return new Paginatedlist<ClinicItemDto>(clinics, dto.Page, totalItem, dto.PageItemCount);
     }
 
     public async Task<ClinicDetailDto> GetClinic(int clinicId)

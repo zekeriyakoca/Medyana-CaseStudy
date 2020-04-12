@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dtos.Common;
 using Medyana.Dtos.Clinic;
 using Medyana.Service.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,12 +25,12 @@ namespace Medyana.Web.Controllers
 
     public IClinicAppService ClinicAppService { get; }
 
-    [HttpGet("")]
-    public async Task<IActionResult> GetClinics()
+    [HttpPost("")]
+    public async Task<IActionResult> GetClinics([FromBody] PaginationRequestDto dto)
     {
       return await ActionHandle(async () =>
       {
-        var clinics = await ClinicAppService.GetAllClinics();
+        var clinics = await ClinicAppService.GetAllClinics(dto);
         return Ok(clinics);
       });
       
@@ -45,7 +47,7 @@ namespace Medyana.Web.Controllers
 
     }
 
-    [HttpPost("insert")]
+    [HttpPut("")]
     public async Task<IActionResult> AddClinic([FromBody]ClinicInsertDto clinic)
     {
       return await ActionHandle(async () =>
@@ -56,7 +58,7 @@ namespace Medyana.Web.Controllers
         return Created($"api/clinic/{createdClinic.Id}",createdClinic);
       });
     }
-    [HttpPost("update")]
+    [HttpPatch("")]
     public async Task<IActionResult> UpdateClinic([FromBody]ClinicUpdateDto clinic)
     {
       return await ActionHandle(async () =>
@@ -64,7 +66,18 @@ namespace Medyana.Web.Controllers
         var createdClinic = await ClinicAppService.UpdateClinic(clinic);
         if (createdClinic == null)
           return BadRequest("Unable to update clinic.");
-        return Created($"api/clinic/{createdClinic.Id}", createdClinic);
+        return Ok(createdClinic);
+      });
+    }
+    [HttpDelete("{clinicId}")]
+    public async Task<IActionResult> DeleteClinic(int clinicId)
+    {
+      return await ActionHandle(async () =>
+      {
+        var createdClinic = await ClinicAppService.DeleteClinic(clinicId);
+        if (!createdClinic)
+          return BadRequest("Unable to delete clinic.");
+        return Ok(createdClinic);
       });
     }
   }

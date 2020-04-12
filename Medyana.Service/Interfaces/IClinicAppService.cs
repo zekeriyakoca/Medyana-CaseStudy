@@ -1,4 +1,5 @@
-﻿using Medyana.Dtos.Clinic;
+﻿using Dtos.Common;
+using Medyana.Dtos.Clinic;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Medyana.Service.Interfaces
 {
   public interface IClinicAppService
   {
-    Task<List<ClinicItemDto>> GetAllClinics();
+    Task<Paginatedlist<ClinicItemDto>> GetAllClinics(PaginationRequestDto dto);
     Task<ClinicDetailDto> GetClinic(int clinicId);
     Task<ClinicDetailDto> InsertClinic(ClinicInsertDto clinicToInsert);
     Task<ClinicDetailDto> UpdateClinic(ClinicUpdateDto clinicToUpdate);

@@ -1,4 +1,8 @@
-﻿using Medyana.Domain.Interface;
+﻿using Dtos.Common;
+using Dtos.Enums;
+using Dtos.Equipment;
+using Medyana.Domain.Entities;
+using Medyana.Domain.Interface;
 using Medyana.Dtos.Clinic;
 using Medyana.Dtos.Equipment;
 using Medyana.Service.Interfaces;
@@ -14,28 +18,13 @@ namespace Medyana.Service.AppServices
 {
   public class EquipmentAppService : IEquipmentAppService
   {
+    public IEquipmentRepository equipmentRepository { get; }
+    public IClinicRepository clinicRepository { get; }
+
     public EquipmentAppService(IEquipmentRepository equipmentRepository, IClinicRepository clinicRepository)
     {
       this.equipmentRepository = equipmentRepository;
       this.clinicRepository = clinicRepository;
-    }
-
-    public IEquipmentRepository equipmentRepository { get; }
-    public IClinicRepository clinicRepository { get; }
-
-    public async Task<bool> DeleteEquipment(int equipmentId)
-    {
-      var equipmentToDelete = await equipmentRepository.Get(equipmentId);
-      if (equipmentToDelete == null)
-        return false;
-      equipmentRepository.Remove(equipmentToDelete);
-      return true;
-    }
-
-    public async Task<List<EquipmentItemDto>> GetAllEquipmentsByClinicId(int clinicId)
-    {
-      var equipments = equipmentRepository.GetAllLazy().Where(e=>e.ClinicId == clinicId).ToList();
-      return equipments?.ToEquipmentItemDtoList();
     }
 
     public async Task<EquipmentDetailDto> GetEquipment(int equipmentId)
@@ -44,11 +33,34 @@ namespace Medyana.Service.AppServices
       return equipment?.ToEquipmentDetailDto();
     }
 
+    public async Task<Paginatedlist<EquipmentItemDto>> GetAllEquipments(EquipmentPaginationRequestDto dto)
+    {
+      var result = new Paginatedlist<EquipmentItemDto>();
+
+      var query = await equipmentRepository.GetAllIncludeAll();
+
+      if (dto.ClinicId > 0)
+        query = query.Where(c => c.ClinicId == dto.ClinicId);
+
+      var totalItem = query.Count();
+
+      query = SortAndFilterEquipments(dto, query);
+
+      query = query.Skip(dto.Page * dto.PageItemCount)
+                   .Take(dto.PageItemCount);
+
+      var equipments = query?.ToEquipmentItemDtoList();
+
+      return new Paginatedlist<EquipmentItemDto>(equipments, dto.Page, totalItem, dto.PageItemCount);
+    }
+
     public async Task<EquipmentDetailDto> InsertEquipment(EquipmentInsertDto equipmentToInsert)
     {
-      if (!await clinicRepository.Any(equipmentToInsert.ClinicId)) {
+      if (!await clinicRepository.Any(equipmentToInsert.ClinicId))
+      {
         throw new BusinessException($"There is no clinic with id : {equipmentToInsert.ClinicId}");
       }
+
       var equipment = equipmentToInsert.ToEquipment();
       equipmentRepository.Add(equipment);
 
@@ -73,5 +85,42 @@ namespace Medyana.Service.AppServices
 
       return equipment.ToEquipmentDetailDto();
     }
+
+    public async Task<bool> DeleteEquipment(int equipmentId)
+    {
+      var equipmentToDelete = await equipmentRepository.Get(equipmentId);
+      if (equipmentToDelete == null)
+        return false;
+      equipmentRepository.Remove(equipmentToDelete);
+      await equipmentRepository.SaveChangesAsync();
+      return true;
+    }
+
+    #region Private Methods 
+
+    private static IEnumerable<Equipment> SortAndFilterEquipments(EquipmentPaginationRequestDto dto, IEnumerable<Equipment> query)
+    {
+      var property = typeof(Equipment).GetProperties()
+                        .Where(p => p.CanWrite && p.Name.ToLower() == dto.Column?.ToLower())
+                        .SingleOrDefault();
+
+      switch (dto.Type)
+      {
+        case PaginationType.Sorting:
+          query = dto.IsAscending
+                      ? query.OrderBy(c => property.GetValue(c))
+                      : query.OrderByDescending(c => property.GetValue(c));
+          break;
+        case PaginationType.Searching:
+          query = query.Where(c => c.Name.ToLower().Contains(dto.SearchText.ToLower()));
+          break;
+        default:
+          break;
+      }
+
+      return query;
+    }
+
+    #endregion
   }
 }

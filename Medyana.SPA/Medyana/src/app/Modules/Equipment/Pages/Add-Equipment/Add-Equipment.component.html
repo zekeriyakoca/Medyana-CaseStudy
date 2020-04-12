@@ -1,0 +1,43 @@
+<p>
+  Add New Equipment
+</p>
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="equipmentForm">
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Clinic Id</mat-label>
+        <input matInput readonly placeholder="" formControlName="clinicId" disabled>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Equipment Name</mat-label>
+        <input matInput placeholder="" formControlName="name">
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Equipment Price</mat-label>
+        <input matInput placeholder="" formControlName="price">
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Equipment Quantity</mat-label>
+        <input matInput placeholder="" formControlName="quantity">
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Equipment Usage Rate</mat-label>
+        <input matInput placeholder="" formControlName="usageRate">
+      </mat-form-field>
+      <br>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button type="submit" mat-button [disabled]="!equipmentForm.valid" (click)="addEquipment()">Save</button>
+    <button mat-button [routerLink]="[ '/equipment',{clinicId:clinicId} ]">Cancel</button>
+  </mat-card-actions>
+</mat-card>

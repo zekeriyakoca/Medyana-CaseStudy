@@ -46,7 +46,8 @@ namespace Medyana.Service.Mappers
         Price = model.Price,
         Quantity = model.Quantity,
         SupplyDate = model.SupplyDate,
-        UsageRate = model.UsageRate
+        UsageRate = model.UsageRate,
+        Clinic = model.Clinic.ToClinicItemDto()
       };
     }
 

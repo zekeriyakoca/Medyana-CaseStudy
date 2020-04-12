@@ -10,6 +10,8 @@ namespace Medyana.Domain.Interface
   public interface IEquipmentRepository : IRepository<Equipment>
   {
     Task<bool> Any(int id);
-    IQueryable<Equipment> GetAllLazy();
+
+    Task<IEnumerable<Equipment>> GetAllIncludeAll();
+
   }
 }

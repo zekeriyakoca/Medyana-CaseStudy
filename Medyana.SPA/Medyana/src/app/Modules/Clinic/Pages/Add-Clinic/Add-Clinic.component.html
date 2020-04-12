@@ -1,0 +1,18 @@
+<p>
+  Add New Clinic
+</p>
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="clinicForm">
+      <mat-form-field class="example-full-width">
+        <mat-label>Clinic Name</mat-label>
+        <input matInput placeholder="Ex. Medyana Maltepe" formControlName="name">
+      </mat-form-field>
+      <br>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button type="submit" mat-button [disabled]="!clinicForm.valid" (click)="addClinic()">Save</button>
+    <button mat-button [routerLink]="[ '/clinic' ]">Cancel</button>
+  </mat-card-actions>
+</mat-card>

@@ -14,10 +14,8 @@ namespace Medyana.Infrastructure.Repositories
   {
     public ClinicRepository(DataContext context) : base(context)
     {
-      this.context = context;
-    }
 
-    public DataContext context { get; }
+    }
 
     public async Task<bool> Any(int id)
     {
@@ -26,7 +24,12 @@ namespace Medyana.Infrastructure.Repositories
 
     public IQueryable<Clinic> GetIncludeAll(int id)
     {
-      return context.Clinics.Include(c => c.Equipments).AsNoTracking();
+      return Context.Clinics.Include(c => c.Equipments).AsNoTracking();
+    }
+
+    public async Task<IEnumerable<Clinic>> GetAll()
+    {
+      return Context.Clinics.AsNoTracking();
     }
 
   }

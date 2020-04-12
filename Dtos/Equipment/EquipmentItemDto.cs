@@ -14,6 +14,7 @@ namespace Medyana.Dtos.Clinic
     public decimal UsageRate { get; set; }
     public decimal Price { get; set; }
 
+    public ClinicItemDto Clinic { get; set; }
     public int ClinicId { get; set; }
   }
 }
