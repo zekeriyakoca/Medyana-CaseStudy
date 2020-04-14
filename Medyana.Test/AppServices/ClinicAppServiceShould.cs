@@ -5,20 +5,21 @@ using Medyana.Dtos.Clinic;
 using Medyana.Infrastructure.EntityFramework.Context;
 using Medyana.Infrastructure.Repositories;
 using Medyana.Service.AppServices;
-using Medyana.Test.Common;
-using Medyana.Test.DataSources;
+using Medyana.IntegrationTest.Common;
+using Medyana.IntegrationTest.DataSources;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Extensions;
 
-namespace Medyana.Test.AppServices
+namespace Medyana.IntegrationTest.AppServices
 {
   /// <summary>
   /// Tests Depends on Database Seed.
@@ -67,7 +68,7 @@ namespace Medyana.Test.AppServices
       {
         var clinic = await clinicAppService.GetAllClinics(dto);
 
-        Assert.Equal(clinic.Items.Any(),expectation);
+        Assert.Equal(clinic.Items.Any(), expectation);
 
       }
       catch
@@ -86,7 +87,7 @@ namespace Medyana.Test.AppServices
       {
         var clinic = await clinicAppService.InsertClinic(dto);
 
-        if(expectation)
+        if (expectation)
           Assert.NotNull(clinic);
         else
           Assert.Null(clinic);

@@ -5,8 +5,8 @@ using Medyana.Domain.Entities;
 using Medyana.Dtos.Equipment;
 using Medyana.Infrastructure.Repositories;
 using Medyana.Service.AppServices;
-using Medyana.Test.Common;
-using Medyana.Test.DataSources;
+using Medyana.IntegrationTest.Common;
+using Medyana.IntegrationTest.DataSources;
 using Moq;
 using System;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Utils.Infrastructure;
 using Xunit;
 
-namespace Medyana.Test.AppServices
+namespace Medyana.IntegrationTest.AppServices
 {
   /// <summary>
   /// Tests Depends on Database Seed.

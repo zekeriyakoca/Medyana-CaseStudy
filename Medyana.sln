@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "Utils\Utils.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7BC3A615-0756-47E2-A0E5-689A072A3345}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medyana.Test", "Medyana.Test\Medyana.Test.csproj", "{B730D6E0-AC75-41EE-A7A8-E7697144EA85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medyana.IntegrationTest", "Medyana.Test\Medyana.IntegrationTest.csproj", "{B730D6E0-AC75-41EE-A7A8-E7697144EA85}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Medyana", "Medyana.SPA\Medyana\", "{1FB5059B-7587-40C9-B0C5-BDBD4BE935C7}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -49,6 +49,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Medyana", "Medyana.SPA\Medy
 		VWDPort = "60034"
 		SlnRelativePath = "Medyana.SPA\Medyana\"
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medyana.Test", "IntegrationTest\Medyana.Test.csproj", "{2E2620AA-2BB5-4ECD-9A70-229C2AD61A90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +94,10 @@ Global
 		{1FB5059B-7587-40C9-B0C5-BDBD4BE935C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FB5059B-7587-40C9-B0C5-BDBD4BE935C7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{1FB5059B-7587-40C9-B0C5-BDBD4BE935C7}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{2E2620AA-2BB5-4ECD-9A70-229C2AD61A90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2620AA-2BB5-4ECD-9A70-229C2AD61A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2620AA-2BB5-4ECD-9A70-229C2AD61A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2620AA-2BB5-4ECD-9A70-229C2AD61A90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +112,7 @@ Global
 		{F07877AD-8610-4B49-B572-DA38994ED486} = {C521D5A3-9743-4277-BD5C-C409982C9BB4}
 		{B730D6E0-AC75-41EE-A7A8-E7697144EA85} = {7BC3A615-0756-47E2-A0E5-689A072A3345}
 		{1FB5059B-7587-40C9-B0C5-BDBD4BE935C7} = {FDACE4D8-A2C0-4025-8E31-20C6361CBF7A}
+		{2E2620AA-2BB5-4ECD-9A70-229C2AD61A90} = {7BC3A615-0756-47E2-A0E5-689A072A3345}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3701DDD-1E89-419A-BA52-BD9BB05F2029}

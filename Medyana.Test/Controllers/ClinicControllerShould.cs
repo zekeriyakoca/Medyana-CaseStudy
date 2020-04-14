@@ -2,8 +2,8 @@
 using Medyana.Dtos.Clinic;
 using Medyana.Infrastructure.Repositories;
 using Medyana.Service.AppServices;
-using Medyana.Test.Common;
-using Medyana.Test.DataSources;
+using Medyana.IntegrationTest.Common;
+using Medyana.IntegrationTest.DataSources;
 using Medyana.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Medyana.Test.Controllers
+namespace Medyana.IntegrationTest.Controllers
 {
   [Collection(nameof(DatabaseFixtureCollection))]
   public class ClinicControllerShould : DataOperationBaseShould

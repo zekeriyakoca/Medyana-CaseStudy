@@ -28,7 +28,9 @@ namespace Medyana.Service.AppServices
       if (clinicToDelete == null)
         return false;
       clinicRepository.Remove(clinicToDelete);
-      await clinicRepository.SaveChangesAsync();
+      var result = await clinicRepository.SaveChangesAsync();
+      if (result < 1)
+        return false;
       return true;
     }
 

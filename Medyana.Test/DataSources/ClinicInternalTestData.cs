@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Medyana.Test.DataSources
+namespace Medyana.IntegrationTest.DataSources
 {
   public class ClinicInternalTestData
   {

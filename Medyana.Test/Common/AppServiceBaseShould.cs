@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Medyana.Test.Common
+namespace Medyana.IntegrationTest.Common
 {
   public class DataOperationBaseShould :IClassFixture<DatabaseFixture>
   {
