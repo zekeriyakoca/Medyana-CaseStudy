@@ -9,7 +9,8 @@ using Xunit;
 
 namespace Medyana.IntegrationTest.Common
 {
-  public class DataOperationBaseShould :IClassFixture<DatabaseFixture>
+  [CollectionDefinition(nameof(DatabaseFixtureCollection))]
+  public class DataOperationBaseShould // :IClassFixture<DatabaseFixture>
   {
     public IHostingEnvironment HostingEnvironment { get; set; }
 

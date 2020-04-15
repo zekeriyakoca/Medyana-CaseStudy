@@ -15,7 +15,6 @@ namespace Medyana.IntegrationTest.Common
 
     public DatabaseFixture()
     {
-
       var mockEnvironment = new Mock<IHostingEnvironment>();
       mockEnvironment
                 .Setup(m => m.ContentRootPath)

@@ -40,6 +40,13 @@ namespace Medyana.IntegrationTest.AppServices
     }
 
     [Fact]
+    public void GenericTestClassArrangements_IsSuccess() {
+      Assert.NotNull(equipmentAppService);
+      Assert.NotNull(equipmentRepository);
+      Assert.NotNull(clinicRepository);
+    }
+
+    [Fact]
     public async Task GetEquipmentIsSuccess()
     {
       try
@@ -76,13 +83,13 @@ namespace Medyana.IntegrationTest.AppServices
     [Theory]
     [MemberData(nameof(EquipmentInternalTestData.EquipmentsToInsert),
         MemberType = typeof(EquipmentInternalTestData))]
-    public async Task InsertEquipment_IsSuccess_or_IsFail(EquipmentInsertDto dto, bool expectation, bool expectHandledException)
+    public async Task InsertEquipment_IsSuccess_or_IsFail(EquipmentInsertDto dto, bool isExpectiongSuccess, bool expectHandledException)
     {
       try
       {
         var equipment = await equipmentAppService.InsertEquipment(dto);
 
-        if (expectation)
+        if (isExpectiongSuccess)
           Assert.NotNull(equipment);
         else
           Assert.Null(equipment);

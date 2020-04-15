@@ -43,6 +43,13 @@ namespace Medyana.IntegrationTest.AppServices
     }
 
     [Fact]
+    public void GenericTestClassArrangements_IsSuccess()
+    {
+      Assert.NotNull(clinicAppService);
+      Assert.NotNull(clinicRepository);
+    }
+
+    [Fact]
     public async Task GetClinic_IsSuccess()
     {
       try
@@ -51,7 +58,6 @@ namespace Medyana.IntegrationTest.AppServices
 
         var clinic = await clinicAppService.GetClinic(clinicId.Value);
         Assert.NotNull(clinic);
-
       }
       catch
       {
